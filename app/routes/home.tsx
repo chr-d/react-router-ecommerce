@@ -23,7 +23,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
       <ul className="menu menu-horizontal">
         {categoriesData?.map((category, index) => (
           <li className="bg-base-300 mx-2 capitalize" key={index}>
-            <NavLink to={`category/${category}`}>{category}</NavLink>
+            <NavLink to={`/category/${category}`}>{category}</NavLink>
           </li>
         ))}
       </ul>

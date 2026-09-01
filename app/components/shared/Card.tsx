@@ -17,8 +17,13 @@ const Card = ({ item }) => {
   };
   return (
     <div className="card bg-base-200 w-96 shadow-sm">
-      <figure className="bg-white p-4">
-        <img className="max-h-48" src={item.image} alt={item.title} />
+      <figure className="bg-white p-4 h-48">
+        <img
+          className="h-full"
+          src={item.image}
+          alt={item.title}
+          loading="lazy"
+        />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{item.title}</h2>

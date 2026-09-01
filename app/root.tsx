@@ -5,6 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigation,
 } from "react-router";
 import { Navbar } from "./components/Navbar";
 
@@ -31,11 +32,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
   return (
     <CartState>
       <div className="mx-auto max-w-7xl">
         <Navbar />
-        <Outlet />
+        {isLoading ? (
+          <p className="text-center">
+            Loading content
+            <span className="loading loading-spinner loading-xl mx-2"></span>
+          </p>
+        ) : (
+          <Outlet />
+        )}
       </div>
     </CartState>
   );
