@@ -1,11 +1,12 @@
 import { Card } from "~/components/shared/Card";
 import type { Route } from "./+types/category";
 import { fetchData } from "~/utils/fetchData";
+import type { Product } from "~/types";
 
 export async function loader({ params, request }: Route.LoaderArgs) {
   const category = params.category;
 
-  const data = await fetchData(
+  const data = await fetchData<Product[]>(
     `https://fakestoreapi.com/products/category/${category}`,
     {
       signal: request.signal,

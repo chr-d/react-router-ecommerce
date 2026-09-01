@@ -2,13 +2,14 @@ import { NavLink } from "react-router";
 import { Card } from "~/components/shared/Card";
 import { fetchData } from "~/utils/fetchData";
 import type { Route } from "./+types/home";
+import type { Categories, Product } from "~/types";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const [productsData, categoriesData] = await Promise.all([
-    fetchData("https://fakestoreapi.com/products", {
+    fetchData<Product[]>("https://fakestoreapi.com/products", {
       signal: request.signal,
     }),
-    fetchData("https://fakestoreapi.com/products/categories", {
+    fetchData<Categories>("https://fakestoreapi.com/products/categories", {
       signal: request.signal,
     }),
   ]);

@@ -1,13 +1,17 @@
 import { Link } from "react-router";
 import { useCart } from "~/contexts/CartContext";
+import type { Product } from "~/types";
 import { formatCurrency } from "~/utils/formatCurrency";
 
-const Card = ({ item }) => {
+const Card = ({ item }: { item: Product }) => {
   const { cart, addToCart, removeFromCart } = useCart();
+
+  const cartItem = cart.items.find((i) => i.id === item.id);
+
   const handleAddToCart = () => {
     addToCart({
       id: item.id,
-      name: item.title,
+      title: item.title,
       price: item.price,
       image: item.image,
     });
@@ -36,7 +40,7 @@ const Card = ({ item }) => {
             {formatCurrency(item.price)}
           </span>
 
-          {!cart.items.some((i) => i.id === item.id) ? (
+          {!cartItem ? (
             <button className="btn btn-primary" onClick={handleAddToCart}>
               Add to cart
             </button>
@@ -48,9 +52,7 @@ const Card = ({ item }) => {
               >
                 -
               </button>
-              <span className="self-center text-xl">
-                {cart.items.find((i) => i.id === item.id).quantity}
-              </span>
+              <span className="self-center text-xl">{cartItem.quantity}</span>
               <button className="btn btn-primary" onClick={handleAddToCart}>
                 +
               </button>

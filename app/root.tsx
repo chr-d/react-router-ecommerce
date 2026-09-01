@@ -42,7 +42,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    let timer;
+    let timer: NodeJS.Timeout;
 
     if (navigation.state === "loading") {
       timer = setTimeout(() => {

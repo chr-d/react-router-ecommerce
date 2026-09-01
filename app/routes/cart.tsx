@@ -1,18 +1,19 @@
 import { formatCurrency } from "~/utils/formatCurrency";
 import type { Route } from "./+types/cart";
 import { useCart } from "~/contexts/CartContext";
+import type { CartItem } from "~/types";
 
 export default function Cart() {
   const { cart, addToCart, removeFromCart, clearCart } = useCart();
-  const handleAddToCart = (item) => {
+  const handleAddToCart = (item: CartItem) => {
     addToCart({
       id: item.id,
-      name: item.title,
+      title: item.title,
       price: item.price,
       image: item.image,
     });
   };
-  const handleRemoveFromCart = (id) => {
+  const handleRemoveFromCart = (id: number) => {
     removeFromCart(id);
   };
   const handleClearCart = () => clearCart();
@@ -28,13 +29,13 @@ export default function Cart() {
             <div className="flex size-20 justify-center bg-white p-2">
               <img
                 className="h-full"
-                alt={item.name}
+                alt={item.title}
                 src={item.image}
                 loading="lazy"
               />
             </div>
             <div>
-              <div>{item.name}</div>
+              <div>{item.title}</div>
               <div className="text-xs font-semibold opacity-60">
                 Unit price: {formatCurrency(item.price)}
               </div>
