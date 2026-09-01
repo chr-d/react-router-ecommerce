@@ -1,14 +1,26 @@
 import { useReducer } from "react";
 import { useEffect } from "react";
 import { formatCurrency } from "~/utils/formatCurrency";
+import { CartContext } from "./CartContext";
 
-const initialState = localStorage.getItem("cart")
-  ? JSON.parse(localStorage.getItem("cart"))
-  : {
-      items: [],
-      total: formatCurrency(0),
-      itemCount: 0,
-    };
+const defaultInitialState = {
+  items: [],
+  total: formatCurrency(0),
+  itemCount: 0,
+};
+
+const getInitialState = () => {
+  if (typeof window === "undefined") {
+    return defaultInitialState;
+  }
+  try {
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : defaultInitialState;
+  } catch (error) {
+    console.error("Failed to get cart from localStorage:", error);
+    return defaultInitialState;
+  }
+};
 
 const cartReducer = (state, action) => {
   const recalculateCart = (items) => {
@@ -72,7 +84,7 @@ const cartReducer = (state, action) => {
 };
 
 const CartState = ({ children }) => {
-  const [cart, dispatch] = useReducer(cartReducer, initialState);
+  const [cart, dispatch] = useReducer(cartReducer, null, getInitialState);
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
