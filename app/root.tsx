@@ -6,9 +6,11 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
+import { Navbar } from "./components/Navbar";
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { CartState } from "./contexts/CartState";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -29,7 +31,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <CartState>
+      <div className="mx-auto max-w-7xl">
+        <Navbar />
+        <Outlet />
+      </div>
+    </CartState>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
