@@ -12,6 +12,7 @@ import { Navbar } from "./components/Navbar";
 import type { Route } from "./+types/root";
 import "./app.css";
 import { CartState } from "./contexts/CartState";
+import { useEffect, useState } from "react";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -33,12 +34,26 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   const navigation = useNavigation();
-  const isLoading = navigation.state === "loading";
+  const [showLoader, setShowLoader] = useState(false);
+
+  useEffect(() => {
+    let timer;
+
+    if (navigation.state === "loading") {
+      timer = setTimeout(() => {
+        setShowLoader(true);
+      }, 300);
+    } else {
+      setShowLoader(false);
+    }
+
+    return () => clearTimeout(timer);
+  }, [navigation.state]);
   return (
     <CartState>
       <div className="mx-auto max-w-7xl">
         <Navbar />
-        {isLoading ? (
+        {showLoader ? (
           <p className="text-center">
             Loading content
             <span className="loading loading-spinner loading-xl mx-2"></span>
