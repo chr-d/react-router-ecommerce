@@ -35,6 +35,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   const navigation = useNavigation();
   const [showLoader, setShowLoader] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+
+  useEffect(() => {
+    setIsInitialLoading(false);
+  }, []);
 
   useEffect(() => {
     let timer;
@@ -49,12 +54,15 @@ export default function App() {
 
     return () => clearTimeout(timer);
   }, [navigation.state]);
+
+  const isLoading = isInitialLoading || showLoader;
+
   return (
     <CartState>
       <div className="mx-auto max-w-7xl">
         <Navbar />
-        {showLoader ? (
-          <p className="text-center">
+        {isLoading ? (
+          <p className="text-center py-10">
             Loading content
             <span className="loading loading-spinner loading-xl mx-2"></span>
           </p>

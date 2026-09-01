@@ -26,7 +26,12 @@ export default function Cart() {
         {cart.items.map((item) => (
           <li className="md:list-row" key={item.id}>
             <div className="flex size-20 justify-center bg-white p-2">
-              <img className="h-full" alt={item.name} src={item.image} />
+              <img
+                className="h-full"
+                alt={item.name}
+                src={item.image}
+                loading="lazy"
+              />
             </div>
             <div>
               <div>{item.name}</div>
