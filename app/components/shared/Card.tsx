@@ -33,7 +33,7 @@ const Card = ({ item }: { item: Product }) => {
         <h2 className="card-title">{item.title}</h2>
         <p className="truncate">{item.description}</p>
         <div className="badge badge-outline text-xs capitalize">
-          <Link to={`category/${item.category}`}>{item.category}</Link>
+          <Link to={`/category/${item.category}`}>{item.category}</Link>
         </div>
         <div className="card-actions justify-end">
           <span className="self-center text-xl">
